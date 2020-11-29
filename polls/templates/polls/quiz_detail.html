@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ quiz.title }}</h1>
+<form action="/submit" method="post">
+<input type="hidden" name="quiz" value="{{ quiz.id }}">
+{% csrf_token %}
+{% for question in quiz.questions.all %}
+    <fieldset>
+    <legend><b>{{ question }}?</b></legend>
+    <br>
+    {% for option in question.options.all %}
+        <input type="checkbox" id="{{ option.pk }}" name="{{ question.pk }}" value="{{ option }}">
+        <label for="{{ option.pk }}">{{ option }}</label>
+        <br>
+    {% endfor %}
+    <br>
+    </fieldset>
+{% endfor %}
+<button type="submit" class="btn btn-success">Submit</button>
+</form>
+{% endblock %}

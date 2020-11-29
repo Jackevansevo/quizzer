@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if request.user.is_superuser %}
+    <p><a href="{% url 'admin:index' %}">Admin</a></p>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+    <p>Hello {{ request.user }}</p>
+    <p><a href="{% url 'logout' %}?next={{ request.path | urlencode }}">Logout</a></p>
+{% else %}
+    <p><a href="{% url 'login' %}?next={{ request.path | urlencode }}">Login</a></p>
+{% endif %}
+
+
+<p><a href="{% url 'attempts' %}">Attempts</a></p>
+
+Quizzes:
+{% for quiz in object_list %}
+<ul>
+    <li><a href="{{ quiz.get_absolute_url }}">{{ quiz.title }}</a></li>
+</ul>
+{% empty %}
+    <p>No quizzes to show</p>
+{% endfor %}
+{% endblock %}

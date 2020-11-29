@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="{% url 'index' %}">Home</a></p>
+
+Attempts:
+{% for attempt in object_list %}
+<ul>
+    <li>{{ attempt.quiz.title }} Score: {{ attempt.score }} / {{ attempt.quiz.questions.count }}</li>
+</ul>
+{% empty %}
+    <p>No attempts to show</p>
+{% endfor %}
+{% endblock %}
